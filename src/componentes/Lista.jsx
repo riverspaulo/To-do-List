@@ -5,6 +5,7 @@ export default function Lista() {
     const [tarefa, setTarefa] = useState('');
     const [lista, setLista] = useState([]);
     const [tarefasFixadas, setTarefasFixadas] = useState([]);
+    const [showAlert, setShowAlert] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -21,12 +22,9 @@ export default function Lista() {
     };
 
     const handleToggle = (id) => {
-        // Atualiza o estado das tarefas na lista principal
         setLista(lista.map(item =>
             item.id === id ? { ...item, status: !item.status } : item
         ));
-
-        // Atualiza o estado das tarefas fixadas
         setTarefasFixadas(tarefasFixadas.map(item =>
             item.id === id ? { ...item, status: !item.status } : item
         ));
@@ -52,7 +50,8 @@ export default function Lista() {
 
     const handleFixar = (id) => {
         if (tarefasFixadas.length >= 3) {
-            alert(`Você pode fixar no máximo 3 tarefas.`);
+            setShowAlert(true);
+            setTimeout(() => setShowAlert(false), 3000);
             return;
         }
 
@@ -86,6 +85,13 @@ export default function Lista() {
                 <button type="submit">Adicionar</button>
                 <button onClick={handleClear}>Reset</button>
             </form>
+
+            {/* Alert estilizado */}
+            {showAlert && (
+                <div className="custom-alert">
+                    Você pode fixar no máximo 3 tarefas.
+                </div>
+            )}
 
             <h3>Tarefas Fixadas</h3>
             <ul>
