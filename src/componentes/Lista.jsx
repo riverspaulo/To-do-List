@@ -21,7 +21,13 @@ export default function Lista() {
     };
 
     const handleToggle = (id) => {
+        // Atualiza o estado das tarefas na lista principal
         setLista(lista.map(item =>
+            item.id === id ? { ...item, status: !item.status } : item
+        ));
+
+        // Atualiza o estado das tarefas fixadas
+        setTarefasFixadas(tarefasFixadas.map(item =>
             item.id === id ? { ...item, status: !item.status } : item
         ));
     };
@@ -77,16 +83,18 @@ export default function Lista() {
                 <label>
                     <input type="text" onChange={(e) => setTarefa(e.target.value)} value={tarefa} />
                 </label>
-                <button type="submit" value="Adicionar">Adicionar</button>
+                <button type="submit">Adicionar</button>
                 <button onClick={handleClear}>Reset</button>
             </form>
-           
 
             <h3>Tarefas Fixadas</h3>
             <ul>
                 {tarefasFixadas.map(item => (
                     <li key={item.id} className={item.status ? 'concluida' : ''}>
                         <span>{item.texto}</span>
+                        <button onClick={() => handleToggle(item.id)} className='buttonConcluir'>
+                            {item.status ? 'Desmarcar' : 'Concluir'}
+                        </button>
                         <button onClick={() => handleDesfixar(item.id)} className='buttonDesfixar'>Desfixar</button>
                         <button onClick={() => handleExcluir(item.id, true)} className='buttonExcluir'>Excluir</button>
                     </li>
@@ -114,7 +122,9 @@ export default function Lista() {
                             </button>
                         </div>
                         <span>{item.texto}</span>
-                        <button onClick={() => handleToggle(item.id)} className='buttonConcluir'>{item.status ? 'Desmarcar' : 'Concluir'}</button>
+                        <button onClick={() => handleToggle(item.id)} className='buttonConcluir'>
+                            {item.status ? 'Desmarcar' : 'Concluir'}
+                        </button>
                         <button onClick={() => handleFixar(item.id)} className='buttonFixar'>Fixar</button>
                         <button onClick={() => handleExcluir(item.id)} className='buttonExcluir'>Excluir</button>
                     </li>
