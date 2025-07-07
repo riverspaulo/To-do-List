@@ -1,47 +1,184 @@
-ul li{
-    list-style: none;
+
+h1 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
 }
 
-button{
-    margin: 15px;
+h2, h3 {
+  color: #2c3e50;
+  margin-top: 25px;
 }
 
-form input{
-    margin: 0 20px;
-    padding: 10px;
+h3 {
+  background-color: #3498db;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
 }
 
-.concluida span {
-    text-decoration: line-through; /* Tacha o texto */
-    color: #888;                  /* Deixa o texto cinza */
+/* Formulário */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.concluida {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px;
-    margin-bottom: 5px;
-    border: 1px solid green;
-    border-radius: 4px;
+label input {
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  flex-grow: 1;
+  transition: border-color 0.3s;
 }
 
-/* Estilização geral para a lista (opcional) */
+label input:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+form input {
+  margin: 0;
+  padding: 12px;
+  font-size: 16px;
+}
+
+button {
+  margin: 0;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+
+
+button[type="submit"]:hover {
+    color: white;
+  background-color: #2e63cc;
+}
+
+button[onClick="handleClear"] {
+  background-color: #e74c3c;
+  color: white;
+}
+
+button[onClick="handleClear"]:hover {
+  background-color: #c0392b;
+}
+
+/* Listas */
 ul {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    margin-bottom: 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
 }
 
+li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Tarefas Fixadas */
+ul:first-of-type li {
+  border-left: 4px solid #f39c12;
+}
+
+/* Tarefas Concluídas */
+.concluida span {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.concluida {
+  background-color: #f8f9fa;
+  border-left: 4px solid #2ecc71;
+}
+
+
 li button {
-    margin-left: 15px;
+  margin-left: 8px;
+  padding: 6px 10px;
+  font-size: 0.9em;
+}
+
+button[onClick*="Toggle"] {
+  background-color: #3498db;
+  color: white;
+}
+
+button[onClick*="Toggle"]:hover {
+  background-color: #2980b9;
+}
+
+.buttonConcluir {
+    border-left: 4px solid #2ecc71;
+}
+
+.buttonConcluir:hover {
+    border-left: 4px solid #259654;
+}
+
+.buttonFixar, 
+.buttonDesfixar {
+  background-color: #f39c12;
+  color: white;
+}
+
+.buttonFixar:hover,
+.buttonDesfixar:hover {
+  background-color: #e67e22;
+}
+
+.buttonExcluir {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.buttonExcluir:hover {
+  background-color: #c0392b;
+}
+
+/* Controles de Ordem */
+.controles-ordem {
+  display: flex;
+  gap: 5px;
+  margin-right: 10px;
+}
+
+.controles-ordem button {
+  padding: 4px 10px;
+  background-color: #95a5a6;
+  color: white;
+  margin: 0;
+}
+
+.controles-ordem button:hover {
+  background-color: #7f8c8d;
+}
+
+.controles-ordem button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
 }
