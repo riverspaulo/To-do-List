@@ -5,6 +5,8 @@ export default function Lista() {
     const [tarefa, setTarefa] = useState('');
     const [lista, setLista] = useState([]);
     const [tarefasFixadas, setTarefasFixadas] = useState([]);
+    const [showAlert, setShowAlert] = useState(false);
+    const [showConfirmAlert, setShowConfirmAlert] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,6 +26,9 @@ export default function Lista() {
         setLista(lista.map(item =>
             item.id === id ? { ...item, status: !item.status } : item
         ));
+        setTarefasFixadas(tarefasFixadas.map(item =>
+            item.id === id ? { ...item, status: !item.status } : item
+        ));
     };
 
     const handleMove = (id, direcao) => {
@@ -40,15 +45,19 @@ export default function Lista() {
     };
 
     const handleClear = () => {
-        if (window.confirm('Tem certeza que deseja limpar todas as tarefas?')) {
-            setLista([]);
-            setTarefasFixadas([]);
-        }
+        setShowConfirmAlert(true);
+    };
+
+    const confirmClear = () => {
+        setLista([]);
+        setTarefasFixadas([]);
+        setShowConfirmAlert(false);
     };
 
     const handleFixar = (id) => {
         if (tarefasFixadas.length >= 3) {
-            alert(`Você pode fixar no máximo 3 tarefas.`);
+            setShowAlert(true);
+            setTimeout(() => setShowAlert(false), 3000);
             return;
         }
 
@@ -78,10 +87,40 @@ export default function Lista() {
                 <p>Organize seu dia de forma eficiente</p>
             </header>
 
+            {/* Alerta para limite de tarefas fixadas, ref: https://docs.appsmith.com/reference/appsmith-framework/widget-actions/show-alert */}
+            {showAlert && (
+                <div className="alerta-customizado">
+                    Você pode fixar no máximo 3 tarefas.
+                </div>
+            )}
+
+            {/* Alerta de confirmação para limpar tarefas */}
+            {showConfirmAlert && (
+                <div className="alerta-confirmacao">
+                    <p>Tem certeza que deseja limpar todas as tarefas?</p>
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '10px' }}>
+                        <button 
+                            onClick={confirmClear} 
+                            className="btn btn-sm"
+                            style={{ background: 'white', color: 'var(--primary-color)' }}
+                        >
+                            Confirmar
+                        </button>
+                        <button 
+                            onClick={() => setShowConfirmAlert(false)} 
+                            className="btn btn-sm"
+                            style={{ background: 'white', color: 'var(--danger-color)' }}
+                        >
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            )}
+
             <form onSubmit={handleSubmit} className="form">
                 <input
                     type="text"
-                    className="task-input"
+                    className="Cadastro-tarefas"
                     onChange={(e) => setTarefa(e.target.value)}
                     value={tarefa}
                     placeholder="Digite uma nova tarefa..."
@@ -92,16 +131,22 @@ export default function Lista() {
             </form>
 
             {tarefasFixadas.length > 0 && (
-                <div className="tarefas_fixadas">
+                <div className="tarefas-fixadas">
                     <h3 className="subtitulo">
                         Tarefas Fixadas
-                        <span className="numero_tarefas">{tarefasFixadas.length}</span>
+                        <span className="numero-tarefas">{tarefasFixadas.length}</span>
                     </h3>
-                    <ul className="task-list">
+                    <ul className="lista-tarefas">
                         {tarefasFixadas.map(item => (
-                            <li key={item.id} className={`task-item ${item.status ? 'completed' : ''}`}>
-                                <span className="task-text">{item.texto}</span>
-                                <div className="task-actions">
+                            <li key={item.id} className={`item-tarefas ${item.status ? 'completed' : ''}`}>
+                                <span className="texto-tarefas">{item.texto}</span>
+                                <div className="ações-tarefas">
+                                    <button 
+                                        onClick={() => handleToggle(item.id)} 
+                                        className={`btn btn-sm ${item.status ? 'concluirTarefa' : ''}`}
+                                    >
+                                        {item.status ? 'Desmarcar' : 'Concluir'}
+                                    </button>
                                     <button onClick={() => handleDesfixar(item.id)} className="btn desfixarTarefa btn-sm">Desfixar</button>
                                     <button onClick={() => handleExcluir(item.id, true)} className="btn excluirTarefa btn-sm">Excluir</button>
                                 </div>
@@ -114,14 +159,14 @@ export default function Lista() {
             <div className="tarefas">
                 <h3 className="subtitulo">
                     Todas as Tarefas
-                    <span className="numero_tarefas">{lista.length}</span>
+                    <span className="numero-tarefas">{lista.length}</span>
                 </h3>
                 {lista.length === 0 ? (
                     <p style={{ textAlign: 'center', padding: '20px', color: '#95a5a6' }}>Nenhuma tarefa cadastrada. Adicione uma nova tarefa acima.</p>
                 ) : (
-                    <ul className="task-list">
+                    <ul className="lista-tarefas">
                         {lista.map((item, index) => (
-                            <li key={item.id} className={`task-item ${item.status ? 'completed' : ''}`}>
+                            <li key={item.id} className={`item-tarefas ${item.status ? 'completed' : ''}`}>
                                 <div className="order-controls">
                                     <button
                                         onClick={() => handleMove(item.id, 'subir')}
@@ -138,8 +183,8 @@ export default function Lista() {
                                         ↓
                                     </button>
                                 </div>
-                                <span className="task-text">{item.texto}</span>
-                                <div className="task-actions">
+                                <span className="texto-tarefas">{item.texto}</span>
+                                <div className="ações-tarefas">
                                     <button 
                                         onClick={() => handleToggle(item.id)} 
                                         className={`btn btn-sm ${item.status ? 'concluirTarefa' : ''}`}

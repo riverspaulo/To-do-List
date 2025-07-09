@@ -44,7 +44,6 @@ body {
   margin-bottom: 10px;
 }
 
-/* Formulário */
 .form {
   display: flex;
   flex-wrap: wrap;
@@ -56,7 +55,7 @@ body {
   box-shadow: var(--box-shadow);
 }
 
-.task-input {
+.Cadastro-tarefas {
   flex: 1;
   min-width: 200px;
   padding: 12px 15px;
@@ -66,7 +65,7 @@ body {
   transition: var(--transition);
 }
 
-.task-input:focus {
+.Cadastro-tarefas:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
@@ -80,6 +79,15 @@ body {
   font-weight: bold;
   transition: var(--transition);
   font-size: 1rem;
+}
+
+.btn:not(.adicionarTarefa):not(.limparTudo):not(.concluirTarefa):not(.excluirTarefa):not(.fixarTarefa):not(.desfixarTarefa) {
+  background-color: var(--gray-color);
+  color: white;
+}
+
+.btn:not(.adicionarTarefa):not(.limparTudo):not(.concluirTarefa):not(.excluirTarefa):not(.fixarTarefa):not(.desfixarTarefa):hover {
+  background-color: #7f8c8d;
 }
 
 .adicionarTarefa {
@@ -97,7 +105,7 @@ body {
   color: white;
 }
 
-.limparTudo:hover, .excluirTarefa:hover{
+.limparTudo:hover, .excluirTarefa:hover {
   background-color: #c0392b;
   transform: translateY(-2px);
 }
@@ -107,7 +115,7 @@ body {
   color: white;
 }
 
-.desfixarTarefa, .fixarTarefa{
+.desfixarTarefa, .fixarTarefa {
   background-color: var(--warning-color);
   color: white;
 }
@@ -121,7 +129,6 @@ body {
   font-size: 0.9rem;
 }
 
-/* Seções de Tarefas */
 .subtitulo {
   color: white;
   background-color: var(--primary-color);
@@ -143,13 +150,13 @@ body {
   border-radius: 50%;
 }
 
-.task-list {
+.lista-tarefas {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.task-item {
+.item-tarefas {
   display: flex;
   align-items: center;
   padding: 15px 20px;
@@ -160,25 +167,25 @@ body {
   transition: var(--transition);
 }
 
-.task-item:hover {
+.item-tarefas:hover {
   transform: translateY(-3px);
   box-shadow: var(--box-shadow);
 }
 
-/* Tarefas Fixadas */
-.tarefas_fixadas .task-item {
+
+.tarefas-fixadas .item-tarefas {
   border-left: 4px solid var(--warning-color);
   background-color: #fff9e6;
 }
 
-/* Tarefas Concluídas */
+
 .completed {
   background-color: #f8f9fa;
   border-left: 4px solid #2ecc71;
   background-color: #e8fff2
 }
 
-.completed .task-text {
+.completed .texto-tarefas {
   text-decoration: line-through;
   color: #95a5a6;
 }
@@ -187,13 +194,13 @@ body {
   background-color: #bdc3c7;
 }
 
-.task-text {
+.texto-tarefas {
   flex: 1;
   margin: 0 15px;
   word-break: break-word;
 }
 
-.task-actions {
+.ações-tarefas {
   display: flex;
   gap: 8px;
 }
@@ -219,20 +226,16 @@ body {
   cursor: not-allowed;
 }
 
-
-
-/* Animação para novas tarefas */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.task-item {
+.item-tarefas {
   animation: fadeIn 0.3s ease-out;
 }
 
-/* Badge para contagem de tarefas */
-.numero_tarefas {
+.numero-tarefas {
   display: inline-block;
   background-color: white;
   color: var(--primary-color);
@@ -243,4 +246,50 @@ body {
   line-height: 25px;
   margin-left: 10px;
   font-size: 0.9rem;
+}
+
+@keyframes slideIn {
+  from { 
+    opacity: 0;
+    transform: translateX(-50%) translateY(-30px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.alerta-customizado {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #e74c3c;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out, fadeOut 0.5s ease-out 2.5s;
+  animation-fill-mode: forwards;
+}
+
+.alerta-confirmacao {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--primary-color);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out, fadeOut 0.5s ease-out 2.5s;
+  animation-fill-mode: forwards;
 }
