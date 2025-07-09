@@ -86,7 +86,7 @@ export default function Lista() {
                 <button onClick={handleClear}>Reset</button>
             </form>
 
-            {/* Alert estilizado */}
+            {/* Alerta estilizado, ref: https://docs.appsmith.com/reference/appsmith-framework/widget-actions/show-alert*/}
             {showAlert && (
                 <div className="alerta-customizado">
                     Você pode fixar no máximo 3 tarefas.
