@@ -88,7 +88,7 @@ export default function Lista() {
 
             {/* Alert estilizado */}
             {showAlert && (
-                <div className="alerta_costumizado">
+                <div className="alerta-customizado">
                     Você pode fixar no máximo 3 tarefas.
                 </div>
             )}
